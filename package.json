@@ -1,0 +1,24 @@
+{
+  "name": "docker-cs-logs",
+  "version": "0.0.1",
+  "description": "containership logs application",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/containership/docker-cs-logs.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/containership/docker-cs-logs/issues"
+  },
+  "homepage": "https://github.com/containership/docker-cs-logs#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "helmet": "^2.1.1",
+    "lodash": "^4.13.1"
+  }
+}
