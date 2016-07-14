@@ -28,10 +28,26 @@ app.use(helmet());
 
 // routes
 app.get('/logs/applications/:application/containers/:container', getContainerLogs);
+app.get('/logs/hosts/:host', getContainershipHostLogs);
 
 app.listen(PORT, () => {
     console.log(`Containership-Logs listening on port: ${PORT}`);
 });
+
+function getContainershipHostLogs(req, res, next) {
+    // TODO - NT: support stderr/stdout: currently, host logs are combined into single containership.log file
+
+    const hostLogPath = `${cs_log_path}/containership.log`;
+    const responseStream = fs.existsSync(hostLogPath) ? new WatchStream(hostLogPath) : null;
+
+    if (null === responseStream) {
+        res.status(404);
+        res.send(`No logs were found for host[${req.params.host}] at path[${hostLogPath}]`);
+        return next();
+    }
+
+    return responseStream.pipe(res);
+}
 
 function getContainerLogs(req, res, next) {
     const application = req.params.application;
