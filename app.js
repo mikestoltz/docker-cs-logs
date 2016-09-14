@@ -152,6 +152,14 @@ class WatchStream extends Readable {
                             return this.push(null);
                         }
 
+                        //If the offset exceeds the size of the file, it's been truncated, and we should read 
+                        //from the start again.
+                        const stats = fs.statSync(this.options._path);
+                        const maxOffset = stats.size;
+                        if (this.options._sourceOffset >= maxOffset) {
+                            this.options._sourceOffset = 0;
+                        }
+
                         this.options._stream = fs.createReadStream(this.options._path, {
                             start: this.options._sourceOffset
                         });
